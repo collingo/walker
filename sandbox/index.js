@@ -1,6 +1,6 @@
 var walker = require('../src/walker');
-var DomAdaptor = require('./walker-dom-adaptor');
-var ObjectAdaptor = require('./walker-object-adaptor');
+var DomAdaptor = require('walker-dom');
+var ObjectAdaptor = require('walker-object');
 
 var child11 = {
 	value: 3
