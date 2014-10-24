@@ -4,7 +4,7 @@ module.exports = function(adaptor, rootnode, callback) {
     callback(node);
     node = adaptor.child(node);
     while (node) {
-      walker(node, callback);
+      walker(node);
       node = adaptor.sibling(node);
     }
   }
