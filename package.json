@@ -19,7 +19,7 @@
     "walker-object": "git+https://git@github.com/collingo/walker-object"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
