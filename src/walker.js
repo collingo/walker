@@ -1,8 +1,7 @@
 module.exports = function(adaptor, rootnode, callback) {
 
   function walker(node) {
-    callback(node);
-    node = adaptor.child(node);
+    node = adaptor.child(node, callback.bind(rootnode, node));
     while (node) {
       walker(node);
       node = adaptor.sibling(node);
