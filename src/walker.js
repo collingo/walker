@@ -1,13 +1,12 @@
-module.exports = function(adaptor, rootnode, callback) {
+module.exports = function(adaptor, rootnode, callback, params) {
 
   function walker(node) {
-    node = adaptor.child(node, callback.bind(rootnode, node));
-    while (node) {
-      walker(node);
-      node = adaptor.sibling(node);
-    }
+    var args = Array.prototype.slice.call(arguments, 0);
+    callback.apply(this, args);
+    adaptor.child.bind(this, walker).apply(this, args);
+    adaptor.sibling.bind(this, walker).apply(this, args);
   }
 
-  walker(rootnode);
+  walker.bind(this, rootnode).apply(this, params || []);
 
 };
