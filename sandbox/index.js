@@ -1,6 +1,6 @@
 var walker = require('../src/walker');
-var DomAdaptor = require('../../walker-dom/src/walker-dom');
-var ObjectAdaptor = require('../../walker-object/src/walker-object');
+var DomAdaptor = require('walker-dom');
+var ObjectAdaptor = require('walker-object');
 
 var child11 = {
 	value: 3
@@ -23,7 +23,7 @@ console.log('===DOM====');
 console.log('==========');
 
 walker(new DomAdaptor(), root, function(node) {
-	console.log(arguments);
+	console.log(node.value);
 });
 
 
@@ -52,8 +52,8 @@ console.log('==========');
 console.log('==OBJECT==');
 console.log('==========');
 
-walker(new ObjectAdaptor(), test, function(node) {
+walker(new ObjectAdaptor(), test, function(node, path) {
   if(typeof node !== 'object') {
-    console.log(node);
+    console.log(node, path);
   }
-});
+}, [[]]);

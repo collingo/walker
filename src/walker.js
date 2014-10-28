@@ -1,4 +1,4 @@
-module.exports = function(adaptor, rootnode, callback, params) {
+module.exports = function(adaptor, rootnode, callback) {
 
   function walker(node) {
     var args = Array.prototype.slice.call(arguments, 0);
@@ -7,6 +7,6 @@ module.exports = function(adaptor, rootnode, callback, params) {
     adaptor.sibling.bind(adaptor, walker).apply(adaptor, args);
   }
 
-  walker.bind(this, rootnode).apply(this, params || []);
+  walker.bind(this, rootnode).apply(this, adaptor.initialParams || []);
 
 };

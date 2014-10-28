@@ -124,6 +124,7 @@ describe('walker', function() {
 
   it('should call the callback with the params passed by the adaptor', function() {
     var mockAdaptor = {
+      initialParams: [[]],
       child: function(cb, node, path) {
         var next = tree[node.firstChild];
         path = [].concat(path);
@@ -150,8 +151,9 @@ describe('walker', function() {
 
   });
 
-  it('should call the adaptor methods with the params passed by the previous adaptor', function() {
+  it('should call the adaptor methods with the params passed by the previous adaptor call', function() {
     var mockAdaptor = {
+      initialParams: [[]],
       child: sandbox.spy(function(cb, node, path) {
         var next = tree[node.firstChild];
         path = [].concat(path);
