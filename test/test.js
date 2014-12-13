@@ -98,7 +98,8 @@ describe('walker', function() {
     sandbox.restore();
   });
 
-  it('should call the callback once for every node in the tree', function() {
+  describe('with a simple adaptor', function() {
+
     var mockAdaptor = {
       child: function(cb, node) {
         var next = tree[node.firstChild];
@@ -113,11 +114,30 @@ describe('walker', function() {
         }
       }
     };
-    walker(mockAdaptor, tree[0], callbackSpy);
 
-    expect(callbackSpy).to.have.callCount(tree.length);
-    tree.forEach(function(node) {
-      expect(callbackSpy).to.have.been.calledWith(node);
+    it('should call the callback once for every node in the tree', function() {
+      walker(mockAdaptor, tree[0], callbackSpy);
+
+      expect(callbackSpy).to.have.callCount(tree.length);
+      tree.forEach(function(node) {
+        expect(callbackSpy).to.have.been.calledWith(node);
+      });
+
+    });
+
+    it('should skip the children of the current node if the callback returns true', function() {
+      callbackSpy = sandbox.spy(function(node) {
+        // return true to skip children of this node
+        if(node.value === 'E') {
+          return true;
+        }
+      });
+      walker(mockAdaptor, tree[0], callbackSpy);
+
+      expect(callbackSpy).to.have.callCount(tree.length - 2);
+      expect(callbackSpy).to.not.have.been.calledWith(tree[8]);
+      expect(callbackSpy).to.not.have.been.calledWith(tree[9]);
+
     });
 
   });

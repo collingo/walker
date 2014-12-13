@@ -1,12 +1,15 @@
 module.exports = function(adaptor, rootnode, callback) {
 
-  function walker(node) {
+  function walker() {
+    var ignoreChildren = callback.apply(this, arguments);
     var args = Array.prototype.slice.call(arguments, 0);
-    callback.apply(this, args);
-    adaptor.child.bind(adaptor, walker).apply(adaptor, args);
-    adaptor.sibling.bind(adaptor, walker).apply(adaptor, args);
+    args.unshift(walker);
+    if(!ignoreChildren) {
+      adaptor.child.apply(adaptor, args);
+    }
+    adaptor.sibling.apply(adaptor, args);
   }
 
-  walker.bind(this, rootnode).apply(this, adaptor.initialParams || []);
+  walker.apply(this, ([rootnode].concat(adaptor.initialParams || [])));
 
 };
